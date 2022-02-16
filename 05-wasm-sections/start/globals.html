@@ -1,0 +1,26 @@
+<html>
+	<head></head>
+	<body>
+		<script>
+			async function run() {
+				let immutableGlobal = new WebAssembly.Global({value:'i32', mutable:false}, 1000)
+				let mutableGlobal = new WebAssembly.Global({value:'i32', mutable:true}, 0)
+
+				const response = await fetch('./globals.wasm')
+				const bytes = await response.arrayBuffer()
+				const wasm = await WebAssembly.instantiate(bytes, { js: { mutableGlobal, immutableGlobal } })
+				console.log(wasm)
+				console.log(`mutableValue before: ${wasm.instance.exports.getMutableValue()}`)
+				wasm.instance.exports.setMutableValue(1000);
+				console.log(`mutableValue after: ${wasm.instance.exports.getMutableValue()}`)
+				mutableGlobal.value = 1212
+				console.log(`mutableValue after changing in JS: ${wasm.instance.exports.getMutableValue()}`)
+
+				console.log(`ImmutableValue: ${wasm.instance.exports.getImmutableValue()}`)
+				immutableGlobal.value = 10283 // throws an error.
+			}
+
+			run()
+		</script>
+	</body>
+</html>

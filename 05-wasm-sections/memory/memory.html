@@ -1,0 +1,25 @@
+<html>
+	<head></head>
+	<body>
+		<script>
+			async function run() {
+				let memory = new WebAssembly.Memory({initial: 10, maximum: 100})
+
+				const response = await fetch('./memory.wasm')
+				const bytes = await response.arrayBuffer()
+				const wasm = await WebAssembly.instantiate(bytes, { js: { memory } })
+
+				console.log(wasm)
+				let i32Arr = new Uint32Array(memory.buffer);
+        for (var i = 0; i < 50; i++) {
+          i32Arr[i] = i * i * i;
+        }
+        var sum = wasm.instance.exports.sum(0, 50);
+        console.log(sum);
+
+			}
+
+			run()
+		</script>
+	</body>
+</html>
