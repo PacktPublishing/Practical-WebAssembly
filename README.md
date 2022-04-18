@@ -1,2 +1,2 @@
-# Full-Stack-WebAssembly-with-Rust
-Full-Stack WebAssembly with Rust published by Packt Publishing
+# Practical WebAssembly
+Practical WebAssembly published by Packt Publishing
