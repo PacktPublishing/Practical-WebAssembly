@@ -3,6 +3,6 @@
      const bytes = await fetch("target/wasm32-unknown-unknown/debug/fib_wasm.wasm");
      const response = await bytes.arrayBuffer();
      const result = await WebAssembly.instantiate(response, {});
-     console.log(result.instance.exports.add(10,3));
+     console.log(result.instance.exports.fibonacci(20));
  })();
 </script>
