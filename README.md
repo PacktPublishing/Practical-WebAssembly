@@ -30,7 +30,6 @@ $ touch sum.c
 unsigned sum(unsigned a, unsigned b) {
 return a + b;
 }
-
 ```
 
 **Following is what you need for this book:**
